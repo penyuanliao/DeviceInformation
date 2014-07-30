@@ -31,12 +31,14 @@ public class DeviceExtensionContext extends FREContext {
 		funcs.put("isSupported", 		new IsSupported());
 		funcs.put("getVersion", 		new DeviceVersion());
 		funcs.put("getDeviceInfo", 		new DeviceInfo());
-		funcs.put("startBatteryInfo", 	new DeviceBatteryInfo());
+		funcs.put("registerBatteryInfo",new DeviceBatteryInfo());
 		funcs.put("getBatteryInfo", 	new GetDeviceBatteryInfo());
 		funcs.put("getWifiMacAddress", 	new GetWifiMacAddress());
-		funcs.put("GetAndroidID", 		new GetAndroidID());
-		funcs.put("GetDeviceID", 		new GetDeviceID());
-		funcs.put("GetMemoryInfo",		new GetMemoryInfo());
+		funcs.put("getAndroidID", 		new GetAndroidID());
+		funcs.put("getDeviceID", 		new GetDeviceID());
+		funcs.put("getMemoryInfo",		new GetMemoryInfo());
+		funcs.put("getCPUProcessInfo", 	new GetDeviceCPUInfo());
+		
 		return funcs;
 	}
 

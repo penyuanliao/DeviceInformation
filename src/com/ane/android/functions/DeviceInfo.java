@@ -93,12 +93,12 @@ public class DeviceInfo  implements FREFunction {
 			String androidID = Secure.getString(context.getActivity().getContentResolver(), Secure.ANDROID_ID);
 			
 			TelephonyManager tmanager = (TelephonyManager)context.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-			String DeviceID = tmanager.getDeviceId();
+			String deviceID = tmanager.getDeviceId();
 			
 			result.setProperty("macAddress", FREObject.newObject(macAddress));
 			result.setProperty("androidID", FREObject.newObject(androidID));
-			result.setProperty("DeviceID", FREObject.newObject(DeviceID));
-			context.dispatchStatusEventAsync("macAddress", macAddress);
+			result.setProperty("deviceID", FREObject.newObject(deviceID));
+			//context.dispatchStatusEventAsync("DeviceID_EVENT", deviceID);
 			
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block

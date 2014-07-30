@@ -20,7 +20,7 @@ public class GetMemoryInfo implements FREFunction {
 	public FREObject call(FREContext context, FREObject[] arg1) 
 	{
 		FREObject result = arg1[0];
-		
+		//http://blog.csdn.net/hudashi/article/details/7050897
 		// Device memory data
 		ActivityManager activityManager = (ActivityManager) context.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
 		
@@ -29,6 +29,7 @@ public class GetMemoryInfo implements FREFunction {
 		int cpuNums = runtime.availableProcessors();
 		long totalMemory = runtime.totalMemory();
 		long freeMemory = runtime.freeMemory();
+		long maxMemory = runtime.maxMemory();
 		context.dispatchStatusEventAsync("ActivityManager.Runtime",String.format("cpuNums: %d totalMemory: %d freeMemory: %d", cpuNums, totalMemory, freeMemory));
 		// Debug data (system wide) memory numbers are in bytes
 		long nativeHeapSize = Debug.getNativeHeapSize();
@@ -58,6 +59,7 @@ public class GetMemoryInfo implements FREFunction {
 			result.setProperty("cupNums", FREObject.newObject(cpuNums));
 			result.setProperty("totalMemory", FREObject.newObject(totalMemory));
 			result.setProperty("freeMemory", FREObject.newObject(freeMemory));
+			result.setProperty("maxMemory", FREObject.newObject(maxMemory));
 			
 			result.setProperty("nativeHeapSize", FREObject.newObject(nativeHeapSize));
 			result.setProperty("nativeHeapAllocatedSize", FREObject.newObject(nativeHeapAllocatedSize));
