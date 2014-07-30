@@ -4,15 +4,22 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Debug;
 
+import com.adobe.fre.FREASErrorException;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
+import com.adobe.fre.FREInvalidObjectException;
+import com.adobe.fre.FRENoSuchNameException;
 import com.adobe.fre.FREObject;
+import com.adobe.fre.FREReadOnlyException;
+import com.adobe.fre.FRETypeMismatchException;
+import com.adobe.fre.FREWrongThreadException;
 
 public class GetMemoryInfo implements FREFunction {
 
 	@Override
 	public FREObject call(FREContext context, FREObject[] arg1) 
 	{
+		FREObject result = arg1[0];
 		
 		// Device memory data
 		ActivityManager activityManager = (ActivityManager) context.getActivity().getSystemService(Context.ACTIVITY_SERVICE);
@@ -44,6 +51,60 @@ public class GetMemoryInfo implements FREFunction {
 		activityManager.getMemoryInfo(memoryInfo);
 		
 		context.dispatchStatusEventAsync("ActivityManager.memoryClass",String.format("ActivityManager.memoryInfo %d availMem, %b lowMemory, %d threshold %d memoryClass", memoryInfo.availMem, memoryInfo.lowMemory, memoryInfo.threshold, memoryClass));
+		
+		try 
+		{
+			
+			result.setProperty("cupNums", FREObject.newObject(cpuNums));
+			result.setProperty("totalMemory", FREObject.newObject(totalMemory));
+			result.setProperty("freeMemory", FREObject.newObject(freeMemory));
+			
+			result.setProperty("nativeHeapSize", FREObject.newObject(nativeHeapSize));
+			result.setProperty("nativeHeapAllocatedSize", FREObject.newObject(nativeHeapAllocatedSize));
+			result.setProperty("nativeHeapFreeSize", FREObject.newObject(nativeHeapFreeSize));
+			
+			result.setProperty("dalvikPss", FREObject.newObject(debugMemoryInfo.dalvikPss));
+			result.setProperty("dalvikSharedDirty", FREObject.newObject(debugMemoryInfo.dalvikSharedDirty));
+			result.setProperty("dalvikPrivateDirty", FREObject.newObject(debugMemoryInfo.dalvikPrivateDirty));
+			
+			result.setProperty("nativePss", FREObject.newObject(debugMemoryInfo.nativePss));
+			result.setProperty("nativeSharedDirty", FREObject.newObject(debugMemoryInfo.nativeSharedDirty));
+			result.setProperty("nativePrivateDirty", FREObject.newObject(debugMemoryInfo.nativePrivateDirty));
+			
+			result.setProperty("otherPss", FREObject.newObject(debugMemoryInfo.otherPss));
+			result.setProperty("otherSharedDirty", FREObject.newObject(debugMemoryInfo.otherSharedDirty));
+			result.setProperty("otherPrivateDirty", FREObject.newObject(debugMemoryInfo.otherPrivateDirty));
+			
+			result.setProperty("memoryClass", FREObject.newObject(memoryClass));
+			result.setProperty("memoryInfoAvailMem", FREObject.newObject(memoryInfo.availMem));
+			result.setProperty("memoryInfoLowMemory", FREObject.newObject(memoryInfo.lowMemory));
+			result.setProperty("memoryInfoThreshold", FREObject.newObject(memoryInfo.threshold));
+			
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FRETypeMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREInvalidObjectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREASErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FRENoSuchNameException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREReadOnlyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREWrongThreadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 		return null;
 	}
