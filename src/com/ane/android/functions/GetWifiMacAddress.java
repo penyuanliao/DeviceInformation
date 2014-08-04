@@ -1,7 +1,8 @@
 package com.ane.android.functions;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
@@ -15,12 +16,14 @@ public class GetWifiMacAddress implements FREFunction
 	public FREObject call(FREContext context, FREObject[] arg1) 
 	{
 		FREObject result = arg1[0];
-		TelephonyManager tmanager = (TelephonyManager)context.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-		String DeviceID = tmanager.getDeviceId();
+		WifiManager wifiManager = (WifiManager)context.getActivity().getSystemService(Context.WIFI_SERVICE);
+		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+		/** 取得wifi硬體位址 **/
+		String macAddress = wifiInfo.getMacAddress();
 		
 		try 
 		{
-			result = FREObject.newObject(DeviceID);
+			result = FREObject.newObject(macAddress);
 			
 		} catch (FREWrongThreadException e) 
 		{

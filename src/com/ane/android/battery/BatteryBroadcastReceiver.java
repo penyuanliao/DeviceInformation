@@ -41,7 +41,7 @@ public class BatteryBroadcastReceiver extends BroadcastReceiver {
 	
 	public BatteryBroadcastReceiver(DeviceExtensionContext context)
 	{
-		_context= context;
+		_context = context;
 	}
 	
 	@Override
@@ -61,15 +61,16 @@ public class BatteryBroadcastReceiver extends BroadcastReceiver {
 		{
 			try
 			{
-				StringBuilder batteryValues = new StringBuilder(String.valueOf(present));
-				batteryValues.append("&").append(String.valueOf(level));
-				batteryValues.append("&").append(String.valueOf(scale));
-				batteryValues.append("&").append(String.valueOf(temperature));
-				batteryValues.append("&").append(String.valueOf(voltage));
-				batteryValues.append("&").append(String.valueOf(status));
-				batteryValues.append("&").append(String.valueOf(health));
-				batteryValues.append("&").append(String.valueOf(plugged));
-				batteryValues.append("&").append(String.valueOf(technology));
+				StringBuilder batteryValues = new StringBuilder("present=");
+				batteryValues.append(String.valueOf(present));
+				batteryValues.append("&level=").append(String.valueOf(level));
+				batteryValues.append("&scale=").append(String.valueOf(scale));
+				batteryValues.append("&temperature=").append(String.valueOf(temperature));
+				batteryValues.append("&voltage=").append(String.valueOf(voltage));
+				batteryValues.append("&status=").append(String.valueOf(status));
+				batteryValues.append("&health=").append(String.valueOf(health));
+				batteryValues.append("&plugged=").append(String.valueOf(plugged));
+				batteryValues.append("&technology=").append(String.valueOf(technology));
 				_context.dispatchStatusEventAsync(BatteryStatus.BATTERY_CHANGE, batteryValues.toString());
 			}catch (Exception e)
 			{

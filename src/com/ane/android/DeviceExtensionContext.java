@@ -3,16 +3,18 @@ package com.ane.android;
 import java.util.Map;
 import java.util.HashMap;
 
-import android.app.ActivityManager;
-
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.ane.android.functions.*;
+import com.ane.android.wifiService.WifiBroadcastReceiver;
+import com.ane.android.functions.unregisterWifiInfo;
 import com.ane.android.battery.BatteryBroadcastReceiver;
 
 public class DeviceExtensionContext extends FREContext {
 	
 	public BatteryBroadcastReceiver batteryBroadcastReceiver;
+	
+	public WifiBroadcastReceiver wifiBroadcastReceiver;
 	
 	@Override
 	public void dispose() 
@@ -21,6 +23,9 @@ public class DeviceExtensionContext extends FREContext {
 		
 		batteryBroadcastReceiver = null;
 		
+		getActivity().unregisterReceiver(wifiBroadcastReceiver);
+		
+		wifiBroadcastReceiver = null;
 	}
 
 	@Override
@@ -38,6 +43,8 @@ public class DeviceExtensionContext extends FREContext {
 		funcs.put("getDeviceID", 		new GetDeviceID());
 		funcs.put("getMemoryInfo",		new GetMemoryInfo());
 		funcs.put("getCPUProcessInfo", 	new GetDeviceCPUInfo());
+		funcs.put("registerWifiInfo", 	new registerWifiInfo());
+		funcs.put("unregisterWifiInfo", new unregisterWifiInfo());
 		
 		return funcs;
 	}
